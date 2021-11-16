@@ -33,7 +33,7 @@ def parse_args():
                         help="Language code (ISO 639-1)")
     parser.add_argument("--dataset-name", "-d", metavar="NAME", choices=["aspec_ja_en"], required=True,
                         help="Dataset name")
-    parser.add_argument("--test-path", "-t", metavar="FILE", required=True,
+    parser.add_argument("--test-path", "-t", metavar="FILE", default=os.getenv("WAT_EVAL_TEST"),
                         help="Test file")
     parser.add_argument("--input", "-i", metavar="INPUT", required=True,
                         help="Input file")
@@ -64,6 +64,12 @@ def extract_reference(lines: List[str], lang: str, dataset: str):
 
 
 def main(args):
+    if args.test_path is None or os.path.exists(args.test_path):
+        raise FileNotFoundError(
+            f"{args.test_path}: Please specify the test file path "
+            "via `--test-path` option or `WAT_EVAL_TEST` environment variable."
+        )
+
     test_split = os.path.splitext(os.path.basename(args.test_path))[0]
     cache_dir = os.path.abspath(args.cache_dir)
     work_dir = os.path.join(cache_dir, args.dataset_name)
