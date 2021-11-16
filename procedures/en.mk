@@ -50,7 +50,7 @@ $(SYSOUT_FILE): $(SYSOUT) $(MOSES_TOKENIZER)
 
 .PHONY: eval_bleu
 eval_bleu: $(REF_FILE) $(SYSOUT_FILE) $(MOSES_BLEU)
-	$(MOSES_BLEU) $(REF_FILE) < $(SYSOUT_FILE) 2>/dev/null
+	perl -C $(MOSES_BLEU) $(REF_FILE) < $(SYSOUT_FILE) 2>/dev/null
 
 .PHONY: eval_ribes
 eval_ribes: $(REF_FILE) $(SYSOUT_FILE) $(RIBES_SCRIPTS)
