@@ -34,23 +34,21 @@ $(MOSES_TOKENIZER) $(MOSES_BLEU):
 	@echo 'Cloning Moses github repository (for tokenization and evaluation)...'
 	git clone "https://github.com/moses-smt/mosesdecoder.git" -b RELEASE-2.1.1 mosesdecoder-2.1.1
 
-$(KYTEA_ROOT):
+$(KYTEA_TOKENIZER):
 	@echo 'Downloading Kytea source code (for tokenization)...'
 	curl -sL "http://www.phontron.com/kytea/download/kytea-0.4.6.tar.gz" | tar xz
+	cd $(KYTEA_ROOT) && ./configure --prefix=$(pwd) >&2
+	make -C $(KYTEA_ROOT) -j4 clean >&2
+	make -C $(KYTEA_ROOT) -j4 >&2
+	make -C $(KYTEA_ROOT) -j4 install >&2
 
-$(KYTEA_TOKENIZER): $(KYTEA_ROOT)
-	cd $< && ./configure --prefix=$(pwd)
-	make -f $(KYTEA_ROOT)/Makefile -C $< clean
-	make -f $(KYTEA_ROOT)/Makefile -C $< -j4
-	make -f $(KYTEA_ROOT)/Makefile -C $< install
-
-$(KYTEA_MODEL): $(KYTEA_ROOT)
-	cd $(@D) && curl -O "http://www.phontron.com/kytea/download/model/$(@F).gz"
-	cd $(@D) && gzip -d $(@F).gz
+$(KYTEA_MODEL): $(KYTEA_TOKENIZER)
+	cd $(@D) && curl -O "http://www.phontron.com/kytea/download/model/$(@F).gz" >&2
+	cd $(@D) && gzip -d $(@F).gz >&2
 
 $(WAT_SCRIPTS):
 	@echo 'Cloning WAT-scripts github repository (for preprocess)...'
-	git clone "https://github.com/hassyGO/WAT-scripts.git"
+	git clone "https://github.com/hassyGO/WAT-scripts.git" >&2
 
 $(RIBES_SCRIPT):
 	@echo 'Downloading RIBES script p(for evaluation)...'
