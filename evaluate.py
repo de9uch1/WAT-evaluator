@@ -64,7 +64,7 @@ def extract_reference(lines: List[str], lang: str, dataset: str):
 
 
 def main(args):
-    if args.test_path is None or os.path.exists(args.test_path):
+    if args.test_path is None or not os.path.exists(args.test_path):
         raise FileNotFoundError(
             f"{args.test_path}: Please specify the test file path "
             "via `--test-path` option or `WAT_EVAL_TEST` environment variable."
