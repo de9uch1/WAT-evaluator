@@ -39,7 +39,7 @@ $(KYTEA_ROOT):
 	curl -sL "http://www.phontron.com/kytea/download/kytea-0.4.6.tar.gz" | tar xz
 
 $(KYTEA_TOKENIZER): $(KYTEA_ROOT)
-	cd $< && ./configure --prefix=./
+	cd $< && ./configure --prefix=$(pwd)
 	make -f $(KYTEA_ROOT)/Makefile -C $< clean
 	make -f $(KYTEA_ROOT)/Makefile -C $< -j4
 	make -f $(KYTEA_ROOT)/Makefile -C $< install
