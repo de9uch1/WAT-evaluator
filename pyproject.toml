@@ -1,0 +1,23 @@
+[tool.isort]
+profile = "black"
+
+[tool.poetry]
+name = "wat-evaluator"
+version = "0.1.0"
+description = ""
+authors = ["Hiroyuki Deguchi <deguchi.hiroyuki.db0@is.naist.jp>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.3.0"
+isort = "^5.10.1"
+
+[tool.poetry.scripts]
+wat-evaluator = "wat_evaluator.cli:cli_main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
